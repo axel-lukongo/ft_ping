@@ -1,38 +1,27 @@
-
-#include <stdio.h>
+#include "../include/ft_ping.h"
+#include <unistd.h>
 #include <string.h>
+#include <sys/time.h>
+#include <sys/socket.h>
+#include <arpa/inet.h>
 
-int parse_arguments(int argc, char **argv) {
-    // Check if the correct number of arguments is provided
-    if (argc == 2) {
-        return 0;
-    }
-    if (strcmp(argv[2],"-v") == 0 && strcmp(argv[2], "-?") == 0) {
-        printf("Usage: %s <filename> [optional_second_argument]\n", argv[0]);
-        return 0;
-    }
-    // Process the filename argument
-    const char *filename = argv[1];
-    printf("Filename: %s\n", filename);
 
-    // If a second argument is provided, print it
-    if (argc == 3) {
-        printf("Second argument: %s\n", argv[2]);
-    }
 
-    return 0;
-}
+int main(int argc, char **argv)
+{
+	t_env env;
+	struct sockaddr_in addr;
+	char ip_str[INET_ADDRSTRLEN];
+	int sockfd;
 
-int main(int argc, char *argv[]) {
-    // Check if the correct number of arguments is provided
-    if (argc < 2 || argc > 3) {
-        printf("Usage: %s <filename>\n", argv[0]);
-        return 1;
-    }
-    if (parse_arguments(argc, argv) != 0) {
-        return 1;
-    }
+	parse_args(argc, argv, &env);
+	resolve_host(env.target, &addr, ip_str);
+	sockfd = create_socket();
 
-    // This is a simple C program that does nothing.
-    return 0;
+	printf("PING %s (%s): 56 data bytes\n", env.target, ip_str);
+
+	ping_loop(&env, sockfd, &addr, ip_str);
+
+	close(sockfd);
+	return 0;
 }
