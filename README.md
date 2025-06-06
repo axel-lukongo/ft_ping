@@ -23,4 +23,65 @@ In the Unix environement and operating system (OS), a interface is a group of fu
 
  ICMP(Internet Control Message Protocol) is a set of communication rules that the devices use to report data transmision error through the network.
 
- 
+## Steps to realize this project:
+
+1.  Argument Parsing
+    I start by doing the parsing, to be sur that the format receive is the good one.
+	•	Command-line parsing included:
+	•	Required: destination (hostname or IP)
+	•	Optional: -v for verbose mode
+	•	Optional: -? for help display
+	•	Validates arguments and handles invalid input properly.
+
+⸻
+
+2.  DNS Resolution
+    Once i'm sur about the parsing i resolve the DNS.
+	•	Used getaddrinfo() to convert a hostname to an IPv4 address.
+	•	Stored the resolved IP in a sockaddr_in structure for later use.
+
+3.  And now i create the socket, i will use that to send the package.
+	•	Applied a receive timeout using setsockopt() to avoid infinite blocking on recvfrom().
+
+
+4.  I create my ICMP packet to try
+	•	Manually filled an icmphdr struct (type 8 = Echo Request).
+	•	Added a valid payload (incremental ASCII bytes).
+	•	Computed the checksum with a custom checksum function.
+
+5.  Sending the Packet
+    Now it was time to try to send something
+	•	Sent the ICMP packet using sendto() to the resolved IP address.
+
+⸻
+
+6.  Receiving the Reply
+	•	Used recvfrom() to listen for incoming ICMP packets.
+	•	Parsed the IP header to locate the ICMP segment.
+	•	Printed detailed reply information: size, sequence number, TTL, and round-trip time (RTT).
+
+⸻
+
+7.  Looping with ping_loop()
+	•	Built a loop to:
+	•	Send 1 packet per second
+	•	Increment icmp_seq
+	•	Collect response info and display results
+	•	Mimicked the behavior of the standard ping command.
+
+⸻
+
+8.  Handling SIGINT (Ctrl+C)
+	•	Captured SIGINT using signal().
+	•	On Ctrl+C, displayed a summary:
+	•	Packets sent and received
+	•	Packet loss percentage
+	•	RTT min, max, and average
+
+⸻
+
+9.  Verbose Mode (-v)
+	•	If -v is enabled:
+	•	Displays debug info (ICMP type, code, ID, TTL, etc.)
+	•	Shows timeout messages
+	•	Helpful for debugging and understanding ICMP behavior
