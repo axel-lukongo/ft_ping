@@ -6,6 +6,15 @@
 
 #define PACKET_SIZE 64
 
+/**
+ * @brief This function builds an ICMP Echo Request packet.
+ * It initializes the ICMP header fields, sets the ID and sequence number,
+ * and computes the checksum for the packet.
+ * 
+ * @param packet The buffer to hold the ICMP packet.
+ * @param seq The sequence number for the ICMP request.
+ * @param pid The process ID used to identify the ICMP request.
+ */
 void build_icmp_packet(char *packet, int seq, pid_t pid)
 {
 	memset(packet, 0, PACKET_SIZE);  // ← TRÈS important

@@ -4,6 +4,11 @@
 #include <netinet/ip_icmp.h>
 #include <errno.h>
 
+/**
+ * @brief Create a socket object
+ * 
+ * @return int 
+ */
 int create_socket(void)
 {
 	int sockfd;

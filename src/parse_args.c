@@ -1,20 +1,14 @@
 #include "../include/ft_ping.h"
 
-void	print_usage(void)
-{
-	printf("Usage: ft_ping destination [-v] [-?]\n");
-	printf("Options:\n");
-	printf("  -v        : verbose output\n");
-	printf("  -?        : display this help message\n");
-	exit(EXIT_SUCCESS);
-}
-
-void	print_invalid_option(const char *opt)
-{
-	fprintf(stderr, "ft_ping: invalid option '%s'\n", opt);
-	print_usage();
-}
-
+/**
+ * @brief This function resolves the hostname to an IP address.
+ * It uses getaddrinfo to resolve the target hostname and fills the provided
+ * sockaddr_in structure with the resolved address.
+ * 
+ * @param target The hostname to resolve.
+ * @param addr The sockaddr_in structure to fill with the resolved address.
+ * @param ip_str A string buffer to hold the resolved IP address in human-readable form.
+ */
 void	parse_args(int argc, char **argv, t_env *env)
 {
 	if (argc < 2)

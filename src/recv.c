@@ -8,7 +8,23 @@
 #include <unistd.h>
 #include <errno.h>
 
+
 #define BUFFER_SIZE 1024
+
+
+/**
+ * @brief This function receives an ICMP reply from the socket.
+ * It checks if the reply is an Echo Reply and matches the expected ID and sequence number.
+ * If it is a valid reply, it calculates the round-trip time (RTT) and prints the result.
+ * 
+ * @param sockfd The socket file descriptor to receive the reply.
+ * @param pid The process ID used to identify the ICMP request.
+ * @param seq The sequence number of the ICMP request.
+ * @param ip_str The string representation of the target IP address.
+ * @param send_time The time when the ICMP request was sent.
+ * @param verbose If true, prints verbose information about the received packet.
+ * @return 0 on success, -1 on failure or timeout.
+ */
 int receive_icmp_reply(int sockfd, pid_t pid, int seq, const char *ip_str, struct timeval *send_time, int verbose)
 {
 	char buffer[BUFFER_SIZE];

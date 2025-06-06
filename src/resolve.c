@@ -1,5 +1,14 @@
 #include "../include/ft_ping.h"
 
+/**
+ * @brief This function resolves the hostname to an IP address.
+ * It uses getaddrinfo to resolve the target hostname and fills the provided
+ * sockaddr_in structure with the resolved address.
+ * 
+ * @param target The hostname to resolve.
+ * @param addr The sockaddr_in structure to fill with the resolved address.
+ * @param ip_str A string buffer to hold the resolved IP address in human-readable form.
+ */
 void resolve_host(const char *target, struct sockaddr_in *addr, char *ip_str)
 {
 	struct addrinfo hints;

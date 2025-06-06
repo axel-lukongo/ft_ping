@@ -6,7 +6,15 @@
 #include <arpa/inet.h>
 
 
-
+/**
+ * @brief Main function for the ft_ping program.
+ * It initializes the environment, resolves the target host,
+ * creates a raw socket, and enters the ping loop.
+ * 
+ * @param argc Argument count.
+ * @param argv Argument vector.
+ * @return int Exit status.
+ */
 int main(int argc, char **argv)
 {
 	t_env env;

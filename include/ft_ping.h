@@ -19,7 +19,7 @@ typedef struct s_env {
 	int		verbose;
 }	t_env;
 
-// Définit un header ICMP compatible Linux
+// i defined header ICMP 
 struct icmphdr {
 	uint8_t type;       // 8 = Echo Request, 0 = Echo Reply
 	uint8_t code;       // généralement 0
@@ -44,9 +44,11 @@ typedef struct s_stats {
 	double rtt_min;
 	double rtt_max;
 	double rtt_total;
+    double rtt_mdev;    
+    double *rtts;       
 }	t_stats;
 
-extern t_stats g_stats; // pour accès dans le handler
+extern t_stats g_stats; 
 
 void	    parse_args(int argc, char **argv, t_env *env);
 void	    print_usage(void);
